@@ -5,7 +5,7 @@
   "main": "dist/server.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/server.js",
+    "start": "npm run build && node dist/server.js",
     "dev": "ts-node -r tsconfig-paths/register src/server.ts",
     "migrate": "ts-node -r tsconfig-paths/register src/migrations/migrate.ts",
     "seed": "ts-node -r tsconfig-paths/register src/seeders/seed.ts",
