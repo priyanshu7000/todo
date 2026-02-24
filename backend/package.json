@@ -10,7 +10,8 @@
     "migrate": "ts-node -r tsconfig-paths/register src/migrations/migrate.ts",
     "seed": "ts-node -r tsconfig-paths/register src/seeders/seed.ts",
     "lint": "eslint src/**/*.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "postinstall": "npm run build"
   },
   "keywords": [
     "todo",
