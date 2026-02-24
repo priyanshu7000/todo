@@ -13,6 +13,7 @@
     "sourceMap": true,
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
+    "noEmit": true,
     "baseUrl": ".",
     "types": ["vite/client"],
     "paths": {
