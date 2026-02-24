@@ -1,4 +1,7 @@
 import swaggerJsdoc from 'swagger-jsdoc';
+import path from 'path';
+
+const isProduction = process.env.NODE_ENV === 'production';
 
 const options = {
   definition: {
@@ -10,8 +13,8 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:5000',
-        description: 'Development server',
+        url: isProduction ? '/' : 'http://localhost:5000',
+        description: isProduction ? 'Production server' : 'Development server',
       },
     ],
     components: {
@@ -24,7 +27,9 @@ const options = {
       },
     },
   },
-  apis: ['./src/routes/*.ts'],
+  apis: isProduction
+    ? [path.join(__dirname, '../routes/*.js')]
+    : ['./src/routes/*.ts'],
 };
 
 export const swaggerSpec = swaggerJsdoc(options);

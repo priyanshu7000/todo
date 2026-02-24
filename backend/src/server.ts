@@ -5,16 +5,22 @@ import pool from './config/database';
 
 const startServer = async () => {
   try {
-    // Test database connection
-    const client = await pool.connect();
-    logger.info('Database connection successful');
-    client.release();
-
-    // Start server
-    const server = app.listen(config.port, () => {
+    // Start server first (so Render can detect the port)
+    const server = app.listen(config.port, '0.0.0.0', () => {
       logger.info(`Server running on port ${config.port}`);
       logger.info(`Swagger docs available at http://localhost:${config.port}/api-docs`);
     });
+
+    // Test database connection asynchronously
+    pool.connect()
+      .then((client) => {
+        logger.info('Database connection successful');
+        client.release();
+      })
+      .catch((error) => {
+        logger.error('Database connection failed:', error);
+        logger.warn('Server is running but database is unavailable');
+      });
 
     // Graceful shutdown
     process.on('SIGTERM', () => {
